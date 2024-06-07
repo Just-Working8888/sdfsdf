@@ -1,16 +1,37 @@
 import { useEffect, useState } from 'react'
-import data from '../data/db.json'
 import Card from './Card'
 
 
 function Main() {
-    const [users, setUsers] = useState(data)
-    const [searchvalue, setSearchValue] = useState('')
+    const [users, setUsers] = useState([])
 
+    const [searchvalue, setSearchValue] = useState('')
     const [name, setName] = useState('')
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [avatar, setAvatar] = useState('')
+
+
+
+
+
+    useEffect(() => {
+        fetch('http://192.168.31.85:3005/items')
+            .then((responce) => {
+                if (!responce.ok) {
+                    throw new Error('Abdulbasir has same error')
+                }
+                return responce.json()
+            })
+            .then((data) => {
+                setUsers(data)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }, [])
+
+
     function AddNewObg() {
         setUsers([...users, {
             "title": "AAAAAAAAAAA",
@@ -21,8 +42,6 @@ function Main() {
             "id": "1"
         },])
     }
-
-    console.log(searchvalue);
     const handleSearch = (event) => {
         setSearchValue(event.target.value);
     };
@@ -39,6 +58,10 @@ function Main() {
             }, ...users])
     }
 
+
+
+
+
     return (
         <>
             <div>
@@ -51,6 +74,7 @@ function Main() {
             </div>
             <br />
             <hr />
+            <button></button>
             <input onChange={handleSearch} />
             <section className='main'>
 
@@ -58,8 +82,8 @@ function Main() {
                     filteredData.map((item) =>
                         <Card
                             title={item.title}
-                            avatar={item.avatar}
-                            despretion={item.despretion}
+                            avatar={item.image}
+                            despretion={item.description}
                             name={item.name}
                         />)
                 }

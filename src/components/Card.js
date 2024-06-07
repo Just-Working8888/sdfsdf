@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 const Card = ({ avatar, name, title, despretion }) => {
-    const [state, setState] = useState(0)
+
     return (
         <div className='card'>
 
@@ -13,9 +13,7 @@ const Card = ({ avatar, name, title, despretion }) => {
                     {despretion}
                 </p>
             </div>
-            <div>count = {state}</div>
-            <span onClick={() => setState(state + 1)}>+</span>
-            <span onClick={() => setState(state - 1)}>-</span>
+
             <button>add to cart</button>
         </div>
     )
